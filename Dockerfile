@@ -11,6 +11,7 @@ VOLUME /rec/outdir
 # 24h live room, comma separated
 ENV rooms 14047
 ENV outdir /rec/outdir
+ENV extra_arg ""
 
 #RUN apt update && apt install -y unzip
 
@@ -19,4 +20,4 @@ ENV outdir /rec/outdir
 RUN --mount=from=busybox:latest,src=/bin/,dst=/bin/ \
     wget https://ci.appveyor.com/api/projects/NyaMisty/bililiverecorder/artifacts/BililiveRecorder.Cli%2Fbin%2FDebugPublish%2FBililiveRecorderCliDebug-AnyCPU.zip -O/tmp/cli.zip && unzip /tmp/cli.zip
 
-CMD ["sh", "-c", "dotnet BililiveRecorder.Cli.dll -i \"${rooms}\" -o \"${outdir}\""]
+CMD ["sh", "-c", "exec dotnet BililiveRecorder.Cli.dll -i \"${rooms}\" -o \"${outdir}\" \"${extra_arg]\""]
